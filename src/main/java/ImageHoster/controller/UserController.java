@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 @Controller
@@ -40,9 +41,18 @@ public class UserController {
     //This controller method is called when the request pattern is of type 'users/registration' and also the incoming request is of POST type
     //This method calls the business logic and after the user record is persisted in the database, directs to login page
     @RequestMapping(value = "users/registration", method = RequestMethod.POST)
-    public String registerUser(User user) {
-        userService.registerUser(user);
-        return "redirect:/users/login";
+    public String registerUser(User user,Model model) {
+        String error = "The password should have atleast 1 letter, 1 digit and 1 special character ";
+        if(validatePassword(user.getPassword())==true) {
+            userService.registerUser(user);
+            return "redirect:/users/login";
+        }
+        else{
+            model.addAttribute("passwordTypeError", error);
+            model.addAttribute("User",user);
+            return "users/registration";
+        }
+
     }
 
     //This controller method is called when the request pattern is of type 'users/login'
@@ -78,5 +88,21 @@ public class UserController {
         List<Image> images = imageService.getAllImages();
         model.addAttribute("images", images);
         return "index";
+    }
+    /**
+     * This function validates the password
+     * The password should contain 1 letter(A-Z) or (a-z) , 1 digit and any other special character
+     * @param password is inputted for matching the regular expression
+     *@return boolean value true if the password matchs regular expression else false is returned
+     */
+    public boolean validatePassword(String password){
+        String regxletter=".*[A-Za-z]+.*";
+        String regxdigit=".*[0-9]+.*";
+        String regxSplChar=".*[^A-Za-z0-9].*";
+        if(Pattern.matches(regxletter,password) && Pattern.matches(regxdigit,password)
+                && Pattern.matches(regxSplChar,password)){
+            return true;
+        }
+        return false;
     }
 }
