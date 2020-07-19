@@ -5,6 +5,7 @@ import ImageHoster.model.Comments;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
+import ImageHoster.service.CommentService;
 import ImageHoster.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
-    public String addComment(@PathVariable("title") String title,
+    public String addComments(@PathVariable("title") String title,
            @PathVariable("imageId") Integer imageId,
            @RequestParam("comment") String comment,HttpSession session) throws  IOException{
      System.out.println(comment);
