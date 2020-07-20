@@ -10,7 +10,6 @@ import java.util.List;
 //Here the name of the table to be created in the database is explicitly mentioned as 'users'. Hence the table named 'users' will be created in the database with all the columns mapped to all the attributes in 'User' class
 @Table(name = "users")
 public class User {
-
     //@Id annotation specifies that the corresponding attribute is a primary key
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
