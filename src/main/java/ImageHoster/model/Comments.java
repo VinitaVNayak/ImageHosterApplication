@@ -20,7 +20,7 @@ public class Comments {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "text")
+    @Column(name = "createDate")
     private LocalDate createDate;
 
     public Integer getId() {
