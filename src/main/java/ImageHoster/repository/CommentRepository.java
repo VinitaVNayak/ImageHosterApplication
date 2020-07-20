@@ -7,11 +7,18 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceUnit;
 
+//The annotation is a special type of @Component annotation which describes that the class defines a data repository
 @Repository
 public class CommentRepository {
+    //Get an instance of EntityManagerFactory from persistence unit with name as 'imageHoster'
     @PersistenceUnit(unitName = "imageHoster")
     private EntityManagerFactory emf;
 
+    //The method receives the Comments object to be persisted in the database
+    //Creates an instance of EntityManager
+    //Starts a transaction
+    //The transaction is committed if it is successful
+    //The transaction is rolled back in case of unsuccessful transaction
     public void addComment(Comments comment) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();

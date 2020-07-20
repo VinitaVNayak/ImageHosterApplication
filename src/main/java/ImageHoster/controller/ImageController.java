@@ -100,6 +100,7 @@ public class ImageController {
         User loggedUser= (User) session.getAttribute("loggeduser");
         if(loggedUser.getId()==image.getUser().getId()) {
             String tags = convertTagsToString(image.getTags());
+
             model.addAttribute("image", image);
             model.addAttribute("tags", tags);
             model.addAttribute("comments",image.getComments());
