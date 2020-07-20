@@ -48,9 +48,10 @@ public class ImageController {
     //this list is then sent to 'images/image.html' file and the tags are displayed
     @RequestMapping("/images/{imageId}/{title}")
     public String showImage(@PathVariable("title") String title, @PathVariable("imageId") Integer imageId,Model model) {
-        Image image = imageService.getImageByTitle(title,imageId);
+        Image image = imageService.getImage(imageId);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments", image.getComments());
         return "images/image";
     }
 
@@ -94,13 +95,14 @@ public class ImageController {
     //This string is then displayed by 'edit.html' file as previous tags of an image
     @RequestMapping(value = "/editImage")
     public String editImage(@RequestParam("imageId") Integer imageId, Model model,HttpSession session) {
-        String editError = "Only the owner of the image can delete the image";
+        String editError = "Only the owner of the image can edit the image";
         Image image = imageService.getImage(imageId);
         User loggedUser= (User) session.getAttribute("loggeduser");
         if(loggedUser.getId()==image.getUser().getId()) {
             String tags = convertTagsToString(image.getTags());
             model.addAttribute("image", image);
             model.addAttribute("tags", tags);
+            model.addAttribute("comments",image.getComments());
             return "images/edit";
         }
         else{
@@ -160,6 +162,8 @@ public class ImageController {
         else{
             model.addAttribute("deleteError", error);
             model.addAttribute("image",image);
+            model.addAttribute("comments",image.getComments());
+            model.addAttribute("tags",image.getTags());
             return "images/image";
         }
     }

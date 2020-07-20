@@ -32,7 +32,7 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
-    public String addComments(@PathVariable("title") String title,
+    public String addComments(@PathVariable("imageTitle") String imageTitle,
            @PathVariable("imageId") Integer imageId,
            @RequestParam("comment") String comment,HttpSession session) throws  IOException{
      System.out.println(comment);
@@ -43,7 +43,7 @@ public class CommentController {
         userComments.setImage(image);
         userComments.setUser((User) session.getAttribute("loggedUser"));
         commentService.addComment(userComments);
-        return "redirect:/images" + imageId + "/" + "title";
+        return "redirect:/images/" + imageId+ "/" + imageTitle;
 
 
 
