@@ -10,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.regex.Pattern;
-
 
 @Controller
 public class UserController {
@@ -52,7 +50,6 @@ public class UserController {
             model.addAttribute("User",user);
             return "users/registration";
         }
-
     }
 
     //This controller method is called when the request pattern is of type 'users/login'
@@ -93,7 +90,7 @@ public class UserController {
      * This function validates the password
      * The password should contain 1 letter(A-Z) or (a-z) , 1 digit and any other special character
      * @param password is inputted for matching the regular expression
-     *@return boolean value true if the password matchs regular expression else false is returned
+     *@return boolean value true if the password matches regular expression else false is returned
      */
     public boolean validatePassword(String password){
         String regxletter=".*[A-Za-z]+.*";
